@@ -1,0 +1,6 @@
+﻿# Jangan pernah commit kertas kerja asli
+*.xlsx
+*.xlsm
+*.xls
+*.json
+

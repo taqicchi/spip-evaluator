@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asisten Evaluasi SPIP</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">Asisten Evaluasi SPIP</div>
+  <div class="file" id="fileLabel"></div>
+  <div class="actions">
+    <button id="btnSheets" class="btn ghost" hidden>Pilih sheet</button>
+    <button id="btnOpen" class="btn ghost">Buka berkas…</button>
+    <details class="menu" id="menuMore" hidden>
+      <summary class="btn ghost">Sesi ▾</summary>
+      <div class="menu-pop">
+        <button id="btnSaveSession" class="btn ghost">Simpan sesi reviu (.json)</button>
+        <button id="btnLoadSession" class="btn ghost">Muat sesi reviu (.json)</button>
+        <button id="btnClearSession" class="btn ghost danger">Hapus catatan reviu berkas ini</button>
+      </div>
+    </details>
+    <button id="btnExport" class="btn primary" hidden>Ekspor hasil reviu (.xlsx)</button>
+  </div>
+  <input type="file" id="fileInput" accept=".xlsx,.xlsm,.xls" hidden>
+  <input type="file" id="sessionInput" accept=".json" hidden>
+</header>
+
+<main id="app">
+  <section id="landing" class="landing">
+    <div class="drop" id="drop">
+      <h1>Buka kertas kerja Evaluasi SPIP</h1>
+      <p>Tarik berkas <b>.xlsx</b> ke sini, atau <button class="linkbtn" id="btnOpen2">pilih berkas</button>.</p>
+      <p class="muted">Berkas dibaca langsung di peramban ini dan <b>tidak diunggah ke mana pun</b>. Catatan reviu tersimpan di peramban ini dan bisa diekspor.</p>
+    </div>
+    <div class="howto">
+      <h2>Apa yang dilakukan aplikasi ini</h2>
+      <ul>
+        <li><b>KK 3.1–3.4 (Struktur &amp; Proses)</b> ditampilkan per parameter: kriteria level A–E berdampingan dengan uraian hasil pengujian, grade PM/PK/Evaluasi, AoI, dan penyebab.</li>
+        <li><b>Pemeriksaan otomatis</b>: grade tanpa bukti di level yang diklaim, uraian masih template, pernyataan "belum/tidak" pada level yang dianggap terpenuhi, AoI kosong, grade naik antar tahap, uraian salin-tempel, kode subunsur yang salah.</li>
+        <li><b>Hitung ulang</b> kesimpulan per parameter dan skor subunsur (rumus di berkas yang disimpan ulang oleh aplikasi lain sering tidak punya nilai tersimpan).</li>
+        <li><b>KKE, KK 4, KK 5, KK 6–8</b> ditampilkan sebagai tabel ringkas dengan perbandingan PM → PK → Evaluasi per baris.</li>
+        <li>Beri status &amp; catatan per parameter, lalu <b>ekspor ke Excel</b>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div id="workspace" class="workspace" hidden>
+    <nav id="nav" class="nav"></nav>
+    <section id="content" class="content"></section>
+  </div>
+</main>
+
+<dialog id="sheetDialog" class="dialog">
+  <form method="dialog" class="dialog-body">
+    <h2>Pilih sheet yang akan dibaca</h2>
+    <p class="muted" id="sheetDialogInfo"></p>
+    <div class="presets" id="sheetPresets"></div>
+    <div class="sheetlist" id="sheetList"></div>
+    <div class="dialog-actions">
+      <button value="cancel" class="btn ghost">Batal</button>
+      <button value="ok" class="btn primary" id="btnLoadSheets">Baca sheet terpilih</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="busy" class="busy" hidden><div class="spinner"></div><div id="busyText">Membaca berkas…</div></div>
+<div id="toast" class="toast" hidden></div>
+
+<script src="vendor/xlsx.full.min.js"></script>
+<script src="parser.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
