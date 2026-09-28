@@ -345,7 +345,8 @@
             if (sn) p.flags.push(flag('warn', 'PERNYATAAN_NEGATIF', `${tag}: uraian level ${x.lvl} (dianggap terpenuhi) memuat pernyataan negatif: "${sn}"`, x.cell, base));
             else if (norm(x.text).length < 40) p.flags.push(flag('info', 'URAIAN_PENDEK', `${tag}: uraian level ${x.lvl} sangat singkat ("${norm(x.text)}").`, x.cell, base));
           }
-          if (st.grade !== 'A') {
+          // AoI & penyebab diisi evaluator (PK/Evaluasi), bukan satker saat PM
+          if (s === 'PM') { /* tidak diperiksa */ } else if (st.grade !== 'A') {
             if (!isReal(st.aoiU) && !isReal(st.aoiK)) p.flags.push(flag('warn', 'AOI_KOSONG', `${tag}: grade ${st.grade} (belum A) tetapi Kluster/Uraian AoI kosong.`, st.aoiCell, base));
             else if (!isReal(st.sebabU) && !isReal(st.sebabK)) p.flags.push(flag('info', 'PENYEBAB_KOSONG', `${tag}: AoI terisi tetapi penyebab kosong.`, st.aoiCell, base));
           } else if (isReal(st.aoiU)) {

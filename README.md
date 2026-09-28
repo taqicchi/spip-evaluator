@@ -39,7 +39,7 @@ masing-masing dengan uraiannya sendiri. Keduanya didukung.
 | `PERNYATAAN_NEGATIF` | Uraian pada level yang dianggap terpenuhi memuat "belum", "tidak ada", "kurang memadai", dst. |
 | `URAIAN_DI_ATAS_GRADE` | Ada uraian di level lebih tinggi dari grade |
 | `GRADE_KOSONG` / `GRADE_TIDAK_VALID` | Uraian ada tetapi grade kosong / bukan A–E |
-| `AOI_KOSONG`, `PENYEBAB_KOSONG` | Grade belum A tetapi AoI/penyebab tidak diisi |
+| `AOI_KOSONG`, `PENYEBAB_KOSONG` | Grade PK/Evaluasi belum A tetapi AoI/penyebab tidak diisi (AoI adalah isian evaluator, tidak diperiksa pada tahap PM) |
 | `GRADE_NAIK` / `GRADE_TURUN` | Grade berubah antar tahap (naik ditandai lebih serius) |
 | `URAIAN_DUPLIKAT`, `URAIAN_DISALIN` | Teks uraian identik antar level/parameter, atau PK menyalin PM |
 | `KODE_TANGGAL`, `KODE_SUBUNSUR_BEDA` | Kode subunsur (mis. 1.8) tersimpan sebagai tanggal, atau berbeda antar KK |
