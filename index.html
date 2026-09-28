@@ -3,46 +3,63 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Asisten Evaluasi SPIP</title>
+<title>Evaluator KK 3.1 SPIP</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="topbar">
-  <div class="brand">Asisten Evaluasi SPIP</div>
+  <div class="brand">Evaluator KK 3.1</div>
   <div class="file" id="fileLabel"></div>
-  <div class="actions">
-    <button id="btnSheets" class="btn ghost" hidden>Pilih sheet</button>
-    <button id="btnOpen" class="btn ghost">Buka berkas…</button>
-    <details class="menu" id="menuMore" hidden>
-      <summary class="btn ghost">Sesi ▾</summary>
+  <div class="actions" id="actions" hidden>
+    <span class="seg" id="stageSeg" title="Tahap yang sedang Anda kerjakan">
+      <button type="button" data-s="PK">PK</button><button type="button" data-s="EV">Evaluasi</button>
+    </span>
+    <select id="unitSel" title="Satker yang dinilai"></select>
+    <details class="menu" id="menuBukti">
+      <summary class="btn ghost" id="buktiLabel">Bukti: belum dimuat ▾</summary>
       <div class="menu-pop">
-        <button id="btnSaveSession" class="btn ghost">Simpan sesi reviu (.json)</button>
-        <button id="btnLoadSession" class="btn ghost">Muat sesi reviu (.json)</button>
-        <button id="btnClearSession" class="btn ghost danger">Hapus catatan reviu berkas ini</button>
+        <button id="btnBuktiFolder" class="btn ghost">Pilih folder bukti…</button>
+        <button id="btnBuktiZip" class="btn ghost">Pilih ZIP bukti…</button>
+        <div class="muted small" style="padding:4px 12px">Susunan yang dikenali: <code>…/1.1 - Nama Subunsur/A…E/berkas</code></div>
       </div>
     </details>
-    <button id="btnExport" class="btn primary" hidden>Ekspor hasil reviu (.xlsx)</button>
+    <button id="btnRekap" class="btn ghost">Rekap</button>
+    <details class="menu" id="menuMore">
+      <summary class="btn ghost">Sesi ▾</summary>
+      <div class="menu-pop">
+        <button id="btnOpenOther" class="btn ghost">Buka berkas KK lain…</button>
+        <button id="btnWorksheet" class="btn ghost">Ekspor lembar kerja evaluator (.xlsx)</button>
+        <button id="btnSaveSession" class="btn ghost">Simpan sesi (.json)</button>
+        <button id="btnLoadSession" class="btn ghost">Muat sesi (.json)</button>
+        <button id="btnClearSession" class="btn ghost danger">Hapus isian evaluator untuk berkas ini</button>
+      </div>
+    </details>
+    <button id="btnWrite" class="btn primary">Unduh KK terisi (.xlsx)</button>
   </div>
-  <input type="file" id="fileInput" accept=".xlsx,.xlsm,.xls" hidden>
+  <input type="file" id="fileInput" accept=".xlsx,.xlsm" hidden>
+  <input type="file" id="folderInput" webkitdirectory multiple hidden>
+  <input type="file" id="zipInput" accept=".zip" hidden>
   <input type="file" id="sessionInput" accept=".json" hidden>
 </header>
 
 <main id="app">
   <section id="landing" class="landing">
     <div class="drop" id="drop">
-      <h1>Buka kertas kerja Evaluasi SPIP</h1>
-      <p>Tarik berkas <b>.xlsx</b> ke sini, atau <button class="linkbtn" id="btnOpen2">pilih berkas</button>.</p>
-      <p class="muted">Berkas dibaca langsung di peramban ini dan <b>tidak diunggah ke mana pun</b>. Catatan reviu tersimpan di peramban ini dan bisa diekspor.</p>
+      <h1>Buka kertas kerja KK 3.1</h1>
+      <p>Tarik berkas <b>.xlsx</b> ke sini (workbook lengkap atau berkas yang hanya berisi sheet KK3.1), atau <button class="linkbtn" id="btnOpen">pilih berkas</button>.</p>
+      <p>Setelah itu muat <b>folder atau ZIP bukti</b> dari satker agar bukti tiap level tampil di samping uraiannya.</p>
+      <p class="muted">Semua diproses di peramban ini; tidak ada yang diunggah. Berkas asli tidak pernah diubah — hasil diunduh sebagai salinan.</p>
     </div>
     <div class="howto">
-      <h2>Apa yang dilakukan aplikasi ini</h2>
-      <ul>
-        <li><b>KK 3.1–3.4 (Struktur &amp; Proses)</b> ditampilkan per parameter: kriteria level A–E berdampingan dengan uraian hasil pengujian, grade PM/PK/Evaluasi, AoI, dan penyebab.</li>
-        <li><b>Pemeriksaan otomatis</b>: grade tanpa bukti di level yang diklaim, uraian masih template, pernyataan "belum/tidak" pada level yang dianggap terpenuhi, AoI kosong, grade naik antar tahap, uraian salin-tempel, kode subunsur yang salah.</li>
-        <li><b>Hitung ulang</b> kesimpulan per parameter dan skor subunsur (rumus di berkas yang disimpan ulang oleh aplikasi lain sering tidak punya nilai tersimpan).</li>
-        <li><b>KKE, KK 4, KK 5, KK 6–8</b> ditampilkan sebagai tabel ringkas dengan perbandingan PM → PK → Evaluasi per baris.</li>
-        <li>Beri status &amp; catatan per parameter, lalu <b>ekspor ke Excel</b>.</li>
-      </ul>
+      <h2>Alur kerja</h2>
+      <ol>
+        <li><b>Satker (PM)</b> sudah mengisi uraian hasil pengujian per level dan Grade PM.</li>
+        <li>Anda memilih tahap (<b>PK</b> atau <b>Evaluasi</b>) dan satker, lalu menelusuri parameter satu per satu.</li>
+        <li>Untuk tiap level A–E: baca kriteria, uraian satker, dan buka buktinya; tandai <b>Terbukti / Sebagian / Tidak</b>.</li>
+        <li>Aplikasi menyarankan grade dari verifikasi (level tertinggi yang ia dan semua level di bawahnya terbukti). Anda menetapkan grade, Kluster &amp; Uraian AoI, Kluster &amp; Uraian Penyebab.</li>
+        <li><b>Unduh KK terisi</b>: nilai Anda ditulis ke kolom Grade PK/Evaluasi, AoI, dan penyebab pada salinan berkas asli — format, rumus, dan sheet lain tidak berubah.</li>
+      </ol>
+      <p class="muted">Pintasan (saat tidak sedang mengetik): ← / → pindah parameter · A–E pilih grade.</p>
     </div>
   </section>
 
@@ -52,24 +69,22 @@
   </div>
 </main>
 
-<dialog id="sheetDialog" class="dialog">
-  <form method="dialog" class="dialog-body">
-    <h2>Pilih sheet yang akan dibaca</h2>
-    <p class="muted" id="sheetDialogInfo"></p>
-    <div class="presets" id="sheetPresets"></div>
-    <div class="sheetlist" id="sheetList"></div>
-    <div class="dialog-actions">
-      <button value="cancel" class="btn ghost">Batal</button>
-      <button value="ok" class="btn primary" id="btnLoadSheets">Baca sheet terpilih</button>
-    </div>
-  </form>
-</dialog>
+<aside id="viewer" class="viewer" hidden>
+  <div class="viewer-head">
+    <div class="viewer-title" id="viewerTitle"></div>
+    <a class="btn sm" id="viewerDownload" download>Unduh</a>
+    <button class="btn sm" id="viewerClose">Tutup ✕</button>
+  </div>
+  <div class="viewer-body" id="viewerBody"></div>
+</aside>
 
 <div id="busy" class="busy" hidden><div class="spinner"></div><div id="busyText">Membaca berkas…</div></div>
 <div id="toast" class="toast" hidden></div>
 
 <script src="vendor/xlsx.full.min.js"></script>
 <script src="parser.js"></script>
-<script src="app.js"></script>
+<script src="zip.js"></script>
+<script src="xlsxpatch.js"></script>
+<script src="kk31.js"></script>
 </body>
 </html>

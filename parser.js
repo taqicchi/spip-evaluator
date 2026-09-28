@@ -639,7 +639,7 @@
     return { sheets: sps.map(m => m.name), rows, flags };
   }
 
-  const api = { parseSheet, combineSP, isPlaceholder, isReal, STAGES, STAGE_LABEL, LEVELS, SCORE, colName, addr };
+  const api = { parseSheet, combineSP, isPlaceholder, isReal, negSnippet, STAGES, STAGE_LABEL, LEVELS, SCORE, colName, addr };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.SpipParser = api;
 })(this);
